@@ -1572,7 +1572,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                               ).iconSmall().iconMutedForeground(),
                             ),
                           ],
-                          autofocus: true,
+                          autofocus: false,
                           placeholder: widget.searchPlaceholder,
                           padding: const EdgeInsets.symmetric(
                                   vertical: 12, horizontal: 12) *
