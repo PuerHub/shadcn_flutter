@@ -223,6 +223,14 @@ class PhoneInput extends StatefulWidget {
   /// to guide users on how to search for countries.
   final Widget? searchPlaceholder;
 
+  /// Optional map to override country/region display names.
+  ///
+  /// Maps country codes to custom display names. For example:
+  /// {'HK': 'Hong Kong, China', 'MO': 'Macau, China', 'TW': 'Taiwan, China'}
+  /// When a country code is found in this map, the custom name will be
+  /// displayed instead of the default country name.
+  final Map<String, String>? countryNameOverrides;
+
   /// Creates a [PhoneInput] widget.
   ///
   /// The widget can be initialized with a specific country or complete phone
@@ -240,6 +248,7 @@ class PhoneInput extends StatefulWidget {
   /// - [onlyNumber] (bool, default: true): Whether to allow only numeric input
   /// - [countries] (List<Country>?, optional): Specific countries to show in selector
   /// - [searchPlaceholder] (Widget?, optional): Placeholder for country search field
+  /// - [countryNameOverrides] (Map<String, String>?, optional): Custom display names for countries
   ///
   /// Example:
   /// ```dart
@@ -247,6 +256,7 @@ class PhoneInput extends StatefulWidget {
   ///   initialCountry: Country.canada,
   ///   filterPlusCode: true,
   ///   onChanged: (phone) => _validatePhoneNumber(phone),
+  ///   countryNameOverrides: {'HK': 'Hong Kong, China'},
   /// );
   /// ```
   const PhoneInput({
@@ -261,6 +271,7 @@ class PhoneInput extends StatefulWidget {
     this.onlyNumber = true,
     this.countries,
     this.searchPlaceholder,
+    this.countryNameOverrides,
   });
 
   @override
@@ -315,8 +326,26 @@ class _PhoneInputState extends State<PhoneInput>
     return PhoneNumber(_country, text);
   }
 
+  /// Maps country codes to display unified flags for certain regions.
+  /// Hong Kong, Macau, and Taiwan will display China's flag.
+  String _getFlagCountryCode(String countryCode) {
+    const Map<String, String> flagMapping = {
+      'HK': 'CN', // Hong Kong -> China
+      'MO': 'CN', // Macau -> China
+      'TW': 'CN', // Taiwan -> China
+    };
+    return flagMapping[countryCode.toUpperCase()] ?? countryCode;
+  }
+
+  /// Gets the display name for a country, using override if available.
+  String _getCountryDisplayName(Country country) {
+    return widget.countryNameOverrides?[country.code.toUpperCase()] ??
+           country.name;
+  }
+
   bool _filterCountryCode(Country country, String text) {
-    return country.name.toLowerCase().contains(text) ||
+    final displayName = _getCountryDisplayName(country);
+    return displayName.toLowerCase().contains(text) ||
         country.dialCode.contains(text) ||
         country.code.toLowerCase().contains(text);
   }
@@ -382,7 +411,7 @@ class _PhoneInputState extends State<PhoneInput>
               return Row(
                 children: [
                   CountryFlag.fromCountryCode(
-                    item.code,
+                    _getFlagCountryCode(item.code),
                     shape: styleValue(
                       defaultValue: RoundedRectangle(
                         theme.radiusSm,
@@ -426,7 +455,7 @@ class _PhoneInputState extends State<PhoneInput>
                         child: Row(
                           children: [
                             CountryFlag.fromCountryCode(
-                              country.code,
+                              _getFlagCountryCode(country.code),
                               shape: styleValue(
                                 defaultValue: RoundedRectangle(
                                   theme.radiusSm,
@@ -448,7 +477,7 @@ class _PhoneInputState extends State<PhoneInput>
                                 themeValue: componentTheme?.flagGap,
                               ),
                             ),
-                            Expanded(child: Text(country.name)),
+                            Expanded(child: Text(_getCountryDisplayName(country))),
                             Gap(
                               styleValue(
                                 defaultValue: 16 * theme.scaling,
