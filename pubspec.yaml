@@ -1,6 +1,6 @@
 name: shadcn_flutter
 description: "Beautifully designed components from Shadcn/UI is now available for Flutter"
-version: 0.0.44
+version: 0.0.46
 homepage: "https://github.com/sunarya-thito/shadcn_flutter"
 documentation: "https://sunarya-thito.github.io/shadcn_flutter/"
 repository: "https://github.com/sunarya-thito/shadcn_flutter"
@@ -15,11 +15,9 @@ dependencies:
   flutter:
     sdk: flutter
   skeletonizer: ^2.1.0+1
-  syntax_highlight: ^0.5.0
-  country_flags: ^3.3.0
+  country_flags: ^4.1.0
   phonecodes: ^0.0.4
   cross_file: ^0.3.4+2
-  image: ^4.2.0
   web: ^1.1.1
   data_widget: ^0.0.2
   gap: ^3.0.1
@@ -28,9 +26,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-  icon_font_generator: ^4.0.0
-  archive: any
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -39,59 +35,59 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   fonts:
-    - family: RadixIcons
-      fonts:
-        - asset: "lib/icons/RadixIcons.otf"
-    - family: BootstrapIcons
-      fonts:
-        - asset: "lib/icons/BootstrapIcons.otf"
-    - family: LucideIcons
-      fonts:
-        - asset: "lib/icons/LucideIcons.ttf"
-    - family: "GeistSans"
-      fonts:
-        - asset: "lib/fonts/Geist-Black.otf"
-          weight: 800
-        - asset: "lib/fonts/Geist-Bold.otf"
-          weight: 700
-        - asset: "lib/fonts/Geist-Light.otf"
-          weight: 300
-        - asset: "lib/fonts/Geist-Medium.otf"
-          weight: 500
-        - asset: "lib/fonts/Geist-SemiBold.otf"
-          weight: 600
-        - asset: "lib/fonts/Geist-Thin.otf"
-          weight: 100
-        - asset: "lib/fonts/Geist-UltraBlack.otf"
-          weight: 900
-        - asset: "lib/fonts/Geist-UltraLight.otf"
-          weight: 200
-        - asset: "lib/fonts/Geist-Regular.otf"
-          weight: 400
-    - family: "GeistMono"
-      fonts:
-        - asset: "lib/fonts/GeistMono-Black.otf"
-          weight: 800
-        - asset: "lib/fonts/GeistMono-Bold.otf"
-          weight: 700
-        - asset: "lib/fonts/GeistMono-Light.otf"
-          weight: 300
-        - asset: "lib/fonts/GeistMono-Medium.otf"
-          weight: 500
-        - asset: "lib/fonts/GeistMono-Regular.otf"
-          weight: 400
-        - asset: "lib/fonts/GeistMono-SemiBold.otf"
-          weight: 600
-        - asset: "lib/fonts/GeistMono-Thin.otf"
-          weight: 100
-        - asset: "lib/fonts/GeistMono-UltraBlack.otf"
-          weight: 900
-        - asset: "lib/fonts/GeistMono-UltraLight.otf"
-          weight: 200
+  - family: RadixIcons
+    fonts:
+    - asset: "lib/icons/RadixIcons.otf"
+  - family: BootstrapIcons
+    fonts:
+    - asset: "lib/icons/BootstrapIcons.otf"
+  - family: LucideIcons
+    fonts:
+    - asset: "lib/icons/LucideIcons.ttf"
+  - family: "GeistSans"
+    fonts:
+    - asset: "lib/fonts/Geist-Black.otf"
+      weight: 800
+    - asset: "lib/fonts/Geist-Bold.otf"
+      weight: 700
+    - asset: "lib/fonts/Geist-Light.otf"
+      weight: 300
+    - asset: "lib/fonts/Geist-Medium.otf"
+      weight: 500
+    - asset: "lib/fonts/Geist-SemiBold.otf"
+      weight: 600
+    - asset: "lib/fonts/Geist-Thin.otf"
+      weight: 100
+    - asset: "lib/fonts/Geist-UltraBlack.otf"
+      weight: 900
+    - asset: "lib/fonts/Geist-UltraLight.otf"
+      weight: 200
+    - asset: "lib/fonts/Geist-Regular.otf"
+      weight: 400
+  - family: "GeistMono"
+    fonts:
+    - asset: "lib/fonts/GeistMono-Black.otf"
+      weight: 800
+    - asset: "lib/fonts/GeistMono-Bold.otf"
+      weight: 700
+    - asset: "lib/fonts/GeistMono-Light.otf"
+      weight: 300
+    - asset: "lib/fonts/GeistMono-Medium.otf"
+      weight: 500
+    - asset: "lib/fonts/GeistMono-Regular.otf"
+      weight: 400
+    - asset: "lib/fonts/GeistMono-SemiBold.otf"
+      weight: 600
+    - asset: "lib/fonts/GeistMono-Thin.otf"
+      weight: 100
+    - asset: "lib/fonts/GeistMono-UltraBlack.otf"
+      weight: 900
+    - asset: "lib/fonts/GeistMono-UltraLight.otf"
+      weight: 200
 
 topics:
-  - widgets
-  - user-interface
-  - design
-  - components
-  - shadcn-ui
+- widgets
+- user-interface
+- design
+- components
+- shadcn-ui

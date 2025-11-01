@@ -3,14 +3,33 @@ import 'package:flutter/services.dart';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
+/// Represents a phone number with country code information.
+///
+/// [PhoneNumber] combines a country (with dial code) and a phone number
+/// string to create a complete international phone number.
+///
+/// Example:
+/// ```dart
+/// final phone = PhoneNumber(
+///   Country(dialCode: '+1', code: 'US'),
+///   '5551234567',
+/// );
+/// print(phone.fullNumber); // +15551234567
+/// ```
 class PhoneNumber {
+  /// The country associated with this phone number.
   final Country country;
+
+  /// The phone number without the country code.
   final String number; // without country code
 
+  /// Creates a [PhoneNumber] with the specified country and number.
   const PhoneNumber(this.country, this.number);
 
+  /// Gets the complete phone number including country code.
   String get fullNumber => '${country.dialCode}$number';
 
+  /// Gets the full number or null if the number is empty.
   String? get value => number.isEmpty ? null : fullNumber;
 
   @override
@@ -241,13 +260,13 @@ class PhoneInput extends StatefulWidget {
   /// Parameters:
   /// - [initialCountry] (Country?, optional): Default country when no initial value provided
   /// - [initialValue] (PhoneNumber?, optional): Complete initial phone number with country
-  /// - [onChanged] (ValueChanged<PhoneNumber>?, optional): Callback for phone number changes
+  /// - [onChanged] (`ValueChanged<PhoneNumber>?`, optional): Callback for phone number changes
   /// - [controller] (TextEditingController?, optional): Controller for the number input field
   /// - [filterPlusCode] (bool, default: true): Whether to filter out plus symbols
   /// - [filterZeroCode] (bool, default: true): Whether to filter out leading zeros
   /// - [filterCountryCode] (bool, default: true): Whether to filter out country codes
   /// - [onlyNumber] (bool, default: true): Whether to allow only numeric input
-  /// - [countries] (List<Country>?, optional): Specific countries to show in selector
+  /// - [countries] (`List<Country>?`, optional): Specific countries to show in selector
   /// - [searchPlaceholder] (Widget?, optional): Placeholder for country search field
   /// - [countryNameOverrides] (Map<String, String>?, optional): Custom display names for countries
   ///
@@ -415,18 +434,22 @@ class _PhoneInputState extends State<PhoneInput>
               return Row(
                 children: [
                   CountryFlag.fromCountryCode(
-                    _getFlagCountryCode(item.code),
-                    shape: styleValue(
-                      defaultValue: RoundedRectangle(theme.radiusSm),
-                      themeValue: componentTheme?.flagShape,
-                    ),
-                    height: styleValue(
-                      defaultValue: theme.scaling * 18,
-                      themeValue: componentTheme?.flagHeight,
-                    ),
-                    width: styleValue(
-                      defaultValue: theme.scaling * 24,
-                      themeValue: componentTheme?.flagWidth,
+                    item.code,
+                    theme: ImageTheme(
+                      shape: styleValue(
+                        defaultValue: RoundedRectangle(
+                          theme.radiusSm,
+                        ),
+                        themeValue: componentTheme?.flagShape,
+                      ),
+                      height: styleValue(
+                        defaultValue: theme.scaling * 18,
+                        themeValue: componentTheme?.flagHeight,
+                      ),
+                      width: styleValue(
+                        defaultValue: theme.scaling * 24,
+                        themeValue: componentTheme?.flagWidth,
+                      ),
                     ),
                   ),
                   Gap(
@@ -448,17 +471,17 @@ class _PhoneInputState extends State<PhoneInput>
             ),
             popup: SelectPopup.builder(
               builder: (context, searchQuery) {
-                return SelectItemList(
-                  children: [
-                    for (final country in widget.countries ?? Country.values)
-                      if (searchQuery == null ||
-                          _filterCountryCode(country, searchQuery))
-                        SelectItemButton(
-                          value: country,
-                          child: Row(
-                            children: [
-                              CountryFlag.fromCountryCode(
-                                _getFlagCountryCode(country.code),
+                return SelectItemList(children: [
+                  for (final country in widget.countries ?? Country.values)
+                    if (searchQuery == null ||
+                        _filterCountryCode(country, searchQuery))
+                      SelectItemButton(
+                        value: country,
+                        child: Row(
+                          children: [
+                            CountryFlag.fromCountryCode(
+                              country.code,
+                              theme: ImageTheme(
                                 shape: styleValue(
                                   defaultValue: RoundedRectangle(
                                     theme.radiusSm,
@@ -473,15 +496,6 @@ class _PhoneInputState extends State<PhoneInput>
                                   defaultValue: theme.scaling * 24,
                                   themeValue: componentTheme?.flagWidth,
                                 ),
-                              ),
-                              Gap(
-                                styleValue(
-                                  defaultValue: theme.scaling * 8,
-                                  themeValue: componentTheme?.flagGap,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(_getCountryDisplayName(country)),
                               ),
                               Gap(
                                 styleValue(
