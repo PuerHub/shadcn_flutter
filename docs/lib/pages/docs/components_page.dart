@@ -19,6 +19,7 @@ import 'package:docs/pages/docs/components/chip_input/chip_input_tile.dart';
 import 'package:docs/pages/docs/components/circular_progress/circular_progress_tile.dart';
 import 'package:docs/pages/docs/components/code_snippet/code_snippet_tile.dart';
 import 'package:docs/pages/docs/components/collapsible/collapsible_tile.dart';
+import 'package:docs/pages/docs/components/countdown/countdown_tile.dart';
 import 'package:docs/pages/docs/components/color_picker/color_picker_tile.dart';
 import 'package:docs/pages/docs/components/command/command_tile.dart';
 import 'package:docs/pages/docs/components/context_menu/context_menu_tile.dart';
@@ -247,6 +248,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
               const WIPComponentCard(title: 'Data Table'),
               const WIPComponentCard(title: 'Chart'),
               const CodeSnippetTile(),
+              const CountdownTile(),
               const WIPComponentCard(title: 'Table'),
               const TrackerTile(),
               const DotIndicatorTile(),

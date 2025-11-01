@@ -90,8 +90,9 @@ class PhoneInputTheme {
     return PhoneInputTheme(
       padding: padding != null ? padding() : this.padding,
       borderRadius: borderRadius != null ? borderRadius() : this.borderRadius,
-      popupConstraints:
-          popupConstraints != null ? popupConstraints() : this.popupConstraints,
+      popupConstraints: popupConstraints != null
+          ? popupConstraints()
+          : this.popupConstraints,
       maxWidth: maxWidth != null ? maxWidth() : this.maxWidth,
       flagHeight: flagHeight != null ? flagHeight() : this.flagHeight,
       flagWidth: flagWidth != null ? flagWidth() : this.flagWidth,
@@ -119,16 +120,16 @@ class PhoneInputTheme {
 
   @override
   int get hashCode => Object.hash(
-        padding,
-        borderRadius,
-        popupConstraints,
-        maxWidth,
-        flagHeight,
-        flagWidth,
-        flagGap,
-        countryGap,
-        flagShape,
-      );
+    padding,
+    borderRadius,
+    popupConstraints,
+    maxWidth,
+    flagHeight,
+    flagWidth,
+    flagGap,
+    countryGap,
+    flagShape,
+  );
 
   @override
   String toString() {
@@ -166,57 +167,57 @@ class PhoneInput extends StatefulWidget {
   /// United States. When [initialValue] is provided, its country takes
   /// precedence over this setting.
   final Country? initialCountry;
-  
+
   /// The initial phone number value including country and number.
   ///
   /// When provided, both the country selector and number field are
   /// initialized with the values from this phone number. Takes precedence
   /// over [initialCountry] for country selection.
   final PhoneNumber? initialValue;
-  
+
   /// Callback invoked when the phone number changes.
   ///
   /// Called whenever the user changes either the country selection or
   /// the phone number text. The callback receives a [PhoneNumber] object
   /// containing both the selected country and entered number.
   final ValueChanged<PhoneNumber>? onChanged;
-  
+
   /// Optional text editing controller for the number input field.
   ///
   /// When provided, this controller manages the text content of the phone
   /// number input field. If null, an internal controller is created and managed.
   final TextEditingController? controller;
-  
+
   /// Whether to filter out plus (+) symbols from input.
   ///
   /// When true, plus symbols are automatically removed from user input
   /// since the country code already provides the international prefix.
   final bool filterPlusCode;
-  
+
   /// Whether to filter out leading zeros from input.
   ///
   /// When true, leading zeros are automatically removed from the phone number
   /// to normalize the input format according to international standards.
   final bool filterZeroCode;
-  
+
   /// Whether to filter out country codes from input.
   ///
   /// When true, prevents users from entering the country code digits manually
   /// since the country selector provides this information automatically.
   final bool filterCountryCode;
-  
+
   /// Whether to allow only numeric characters in the input.
   ///
   /// When true, restricts input to numeric characters only, removing
   /// any letters, symbols, or formatting characters that users might enter.
   final bool onlyNumber;
-  
+
   /// Optional list of countries to display in the country selector.
   ///
   /// When provided, only these countries will be available for selection
   /// in the country picker popup. If null, all supported countries are available.
   final List<Country>? countries;
-  
+
   /// Widget displayed as placeholder in the country search field.
   ///
   /// Appears in the search input at the top of the country selector popup
@@ -286,10 +287,12 @@ class _PhoneInputState extends State<PhoneInput>
   @override
   void initState() {
     super.initState();
-    _country = widget.initialCountry ??
+    _country =
+        widget.initialCountry ??
         widget.initialValue?.country ??
         Country.unitedStates;
-    _controller = widget.controller ??
+    _controller =
+        widget.controller ??
         TextEditingController(text: widget.initialValue?.number);
     formValue = value;
     _controller.addListener(_dispatchChanged);
@@ -340,7 +343,7 @@ class _PhoneInputState extends State<PhoneInput>
   /// Gets the display name for a country, using override if available.
   String _getCountryDisplayName(Country country) {
     return widget.countryNameOverrides?[country.code.toUpperCase()] ??
-           country.name;
+        country.name;
   }
 
   bool _filterCountryCode(Country country, String text) {
@@ -362,10 +365,11 @@ class _PhoneInputState extends State<PhoneInput>
           Select<Country>(
             padding: styleValue(
               defaultValue: EdgeInsets.only(
-                  top: theme.scaling * 8,
-                  left: theme.scaling * 8,
-                  bottom: theme.scaling * 8,
-                  right: theme.scaling * 4),
+                top: theme.scaling * 8,
+                left: theme.scaling * 8,
+                bottom: theme.scaling * 8,
+                right: theme.scaling * 4,
+              ),
               themeValue: componentTheme?.padding,
             ),
             // searchPlaceholder: widget.searchPlaceholder ??
@@ -413,9 +417,7 @@ class _PhoneInputState extends State<PhoneInput>
                   CountryFlag.fromCountryCode(
                     _getFlagCountryCode(item.code),
                     shape: styleValue(
-                      defaultValue: RoundedRectangle(
-                        theme.radiusSm,
-                      ),
+                      defaultValue: RoundedRectangle(theme.radiusSm),
                       themeValue: componentTheme?.flagShape,
                     ),
                     height: styleValue(
@@ -446,57 +448,57 @@ class _PhoneInputState extends State<PhoneInput>
             ),
             popup: SelectPopup.builder(
               builder: (context, searchQuery) {
-                return SelectItemList(children: [
-                  for (final country in widget.countries ?? Country.values)
-                    if (searchQuery == null ||
-                        _filterCountryCode(country, searchQuery))
-                      SelectItemButton(
-                        value: country,
-                        child: Row(
-                          children: [
-                            CountryFlag.fromCountryCode(
-                              _getFlagCountryCode(country.code),
-                              shape: styleValue(
-                                defaultValue: RoundedRectangle(
-                                  theme.radiusSm,
+                return SelectItemList(
+                  children: [
+                    for (final country in widget.countries ?? Country.values)
+                      if (searchQuery == null ||
+                          _filterCountryCode(country, searchQuery))
+                        SelectItemButton(
+                          value: country,
+                          child: Row(
+                            children: [
+                              CountryFlag.fromCountryCode(
+                                _getFlagCountryCode(country.code),
+                                shape: styleValue(
+                                  defaultValue: RoundedRectangle(
+                                    theme.radiusSm,
+                                  ),
+                                  themeValue: componentTheme?.flagShape,
                                 ),
-                                themeValue: componentTheme?.flagShape,
+                                height: styleValue(
+                                  defaultValue: theme.scaling * 18,
+                                  themeValue: componentTheme?.flagHeight,
+                                ),
+                                width: styleValue(
+                                  defaultValue: theme.scaling * 24,
+                                  themeValue: componentTheme?.flagWidth,
+                                ),
                               ),
-                              height: styleValue(
-                                defaultValue: theme.scaling * 18,
-                                themeValue: componentTheme?.flagHeight,
+                              Gap(
+                                styleValue(
+                                  defaultValue: theme.scaling * 8,
+                                  themeValue: componentTheme?.flagGap,
+                                ),
                               ),
-                              width: styleValue(
-                                defaultValue: theme.scaling * 24,
-                                themeValue: componentTheme?.flagWidth,
+                              Expanded(
+                                child: Text(_getCountryDisplayName(country)),
                               ),
-                            ),
-                            Gap(
-                              styleValue(
-                                defaultValue: theme.scaling * 8,
-                                themeValue: componentTheme?.flagGap,
+                              Gap(
+                                styleValue(
+                                  defaultValue: 16 * theme.scaling,
+                                  themeValue: componentTheme?.countryGap,
+                                ),
                               ),
-                            ),
-                            Expanded(child: Text(_getCountryDisplayName(country))),
-                            Gap(
-                              styleValue(
-                                defaultValue: 16 * theme.scaling,
-                                themeValue: componentTheme?.countryGap,
-                              ),
-                            ),
-                            Text(country.dialCode).muted(),
-                          ],
+                              Text(country.dialCode).muted(),
+                            ],
+                          ),
                         ),
-                      ),
-                ]);
+                  ],
+                );
               },
             ).asBuilder,
           ),
-          LimitedBox(
-            maxWidth: styleValue(
-              defaultValue: 200 * theme.scaling,
-              themeValue: componentTheme?.maxWidth,
-            ),
+          Expanded(
             child: TextField(
               controller: _controller,
               autofillHints: const [AutofillHints.telephoneNumber],
@@ -513,7 +515,7 @@ class _PhoneInputState extends State<PhoneInput>
               ),
               initialValue: widget.initialValue?.number,
             ),
-          )
+          ),
         ],
       ),
     );
